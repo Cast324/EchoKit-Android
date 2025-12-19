@@ -149,43 +149,37 @@ fun ErrorCard(message: String, onDismiss: () -> Unit) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StatusFilterSection(
     selectedStatus: EchoKitClient.IdeaStatus?,
     onStatusSelected: (EchoKitClient.IdeaStatus?) -> Unit
 ) {
-    Card(
+    SingleChoiceSegmentedButtonRow(
         modifier = Modifier.fillMaxWidth()
     ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+        SegmentedButton(
+            selected = selectedStatus == null,
+            onClick = { onStatusSelected(null) },
+            shape = SegmentedButtonDefaults.itemShape(index = 0, count = 4)
         ) {
-            Text(
-                "Filter by Status",
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+            Text("All", maxLines = 1)
+        }
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+        EchoKitClient.IdeaStatus.entries.forEachIndexed { index, status ->
+            SegmentedButton(
+                selected = selectedStatus == status,
+                onClick = { onStatusSelected(status) },
+                shape = SegmentedButtonDefaults.itemShape(index = index + 1, count = 4)
             ) {
-                FilterChip(
-                    selected = selectedStatus == null,
-                    onClick = { onStatusSelected(null) },
-                    label = { Text("All") },
-                    modifier = Modifier.weight(1f)
+                Text(
+                    text = when (status) {
+                        EchoKitClient.IdeaStatus.PENDING -> "Pending"
+                        EchoKitClient.IdeaStatus.IN_PROGRESS -> "Active"
+                        EchoKitClient.IdeaStatus.COMPLETED -> "Done"
+                    },
+                    maxLines = 1
                 )
-
-                EchoKitClient.IdeaStatus.entries.forEach { status ->
-                    FilterChip(
-                        selected = selectedStatus == status,
-                        onClick = { onStatusSelected(status) },
-                        label = { Text(status.displayName) },
-                        modifier = Modifier.weight(1f)
-                    )
-                }
             }
         }
     }

@@ -29,8 +29,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         // Initialize EchoKit client
         val client = EchoKitClient(
-            baseURL = "http://192.168.1.32:8080/",
-            apiKey = "***REMOVED***",
+            baseURL = "REPLACE_ME_BASE_URL",
+            apiKey = "REPLACE_ME_API_KEY",
             context = applicationContext
         )
 
