@@ -5,31 +5,24 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.echokit.EchoKitClient
-import com.example.echokit.EchoKitTheme
-import com.example.echokit.ui.IdeaDetailScreen
-import com.example.echokit.ui.IdeaDetailViewModel
-import com.example.echokit.ui.IdeasListScreen
-import com.example.echokit.ui.IdeasViewModel
-import com.michaelblades.testechokit.ui.theme.TestEchoKitTheme
+import com.michaelblades.echokit.EchoKitClient
+import com.michaelblades.echokit.EchoKitTheme
+import com.michaelblades.echokit.ui.IdeaDetailScreen
+import com.michaelblades.echokit.ui.IdeaDetailViewModel
+import com.michaelblades.echokit.ui.IdeasListScreen
+import com.michaelblades.echokit.ui.IdeasViewModel
 
 class MainActivity : ComponentActivity() {
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +44,6 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-
     }
 }
 

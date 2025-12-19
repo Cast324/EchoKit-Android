@@ -1,4 +1,4 @@
-package com.example.echokit.ui
+package com.michaelblades.echokit.ui
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -14,7 +14,7 @@ fun NewIdeaDialog(
 ) {
     var title by remember { mutableStateOf("") }
     var body by remember { mutableStateOf("") }
-    
+
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text("New Idea") },
@@ -31,7 +31,7 @@ fun NewIdeaDialog(
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true
                 )
-                
+
                 OutlinedTextField(
                     value = body,
                     onValueChange = { body = it },

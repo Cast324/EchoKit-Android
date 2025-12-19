@@ -1,6 +1,5 @@
-package com.example.echokit.ui
+package com.michaelblades.echokit.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,11 +12,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.example.echokit.EchoKitClient
+import com.michaelblades.echokit.EchoKitClient
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
@@ -31,13 +29,13 @@ fun IdeasListScreen(
     val isLoading by viewModel.isLoading.collectAsState()
     val errorMessage by viewModel.errorMessage.collectAsState()
     val selectedStatus by viewModel.selectedStatus.collectAsState()
-    
+
     var showNewIdeaDialog by remember { mutableStateOf(false) }
-    
+
     LaunchedEffect(Unit) {
         viewModel.loadIdeas()
     }
-    
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -69,7 +67,7 @@ fun IdeasListScreen(
                         )
                     }
                 }
-                
+
                 // Status filter
                 item {
                     StatusFilterSection(
@@ -77,7 +75,7 @@ fun IdeasListScreen(
                         onStatusSelected = { viewModel.setSelectedStatus(it) }
                     )
                 }
-                
+
                 // Ideas list
                 if (ideas.isEmpty() && isLoading) {
                     item {
@@ -102,7 +100,7 @@ fun IdeasListScreen(
             }
         }
     }
-    
+
     if (showNewIdeaDialog) {
         NewIdeaDialog(
             onDismiss = { showNewIdeaDialog = false },
@@ -168,7 +166,7 @@ fun StatusFilterSection(
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -179,8 +177,8 @@ fun StatusFilterSection(
                     label = { Text("All") },
                     modifier = Modifier.weight(1f)
                 )
-                
-                EchoKitClient.IdeaStatus.values().forEach { status ->
+
+                EchoKitClient.IdeaStatus.entries.forEach { status ->
                     FilterChip(
                         selected = selectedStatus == status,
                         onClick = { onStatusSelected(status) },
@@ -223,10 +221,10 @@ fun IdeaCard(
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.weight(1f)
                 )
-                
+
                 CategoryBadge(category = idea.category)
                 StatusBadge(status = idea.status)
-                
+
                 if (idea.isApproved) {
                     Icon(
                         Icons.Default.CheckCircle,
@@ -236,7 +234,7 @@ fun IdeaCard(
                     )
                 }
             }
-            
+
             // Body
             idea.body?.let { body ->
                 if (body.isNotEmpty()) {
@@ -249,7 +247,7 @@ fun IdeaCard(
                     )
                 }
             }
-            
+
             // Actions
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -263,7 +261,7 @@ fun IdeaCard(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
-                        if (idea.userHasVoted) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowUp,
+                        Icons.Default.KeyboardArrowUp,
                         contentDescription = "Vote",
                         tint = if (idea.userHasVoted) MaterialTheme.colorScheme.primary else Color.Gray,
                         modifier = Modifier.size(28.dp)
@@ -275,9 +273,9 @@ fun IdeaCard(
                         color = if (idea.userHasVoted) MaterialTheme.colorScheme.primary else Color.Gray
                     )
                 }
-                
+
                 Spacer(modifier = Modifier.weight(1f))
-                
+
                 // Comment count
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -296,7 +294,7 @@ fun IdeaCard(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                
+
                 Icon(
                     Icons.Default.KeyboardArrowRight,
                     contentDescription = null,
@@ -317,7 +315,7 @@ fun CategoryBadge(category: EchoKitClient.IdeaCategory) {
         EchoKitClient.IdeaCategory.INTEGRATION -> Color(0xFFF8BBD0)
         EchoKitClient.IdeaCategory.UI_UX -> Color(0xFFB2EBF2)
     }
-    
+
     val textColor = when (category) {
         EchoKitClient.IdeaCategory.NEW_IDEA -> Color(0xFF616161)
         EchoKitClient.IdeaCategory.FEATURE -> Color(0xFF7B1FA2)
@@ -325,7 +323,7 @@ fun CategoryBadge(category: EchoKitClient.IdeaCategory) {
         EchoKitClient.IdeaCategory.INTEGRATION -> Color(0xFFC2185B)
         EchoKitClient.IdeaCategory.UI_UX -> Color(0xFF0097A7)
     }
-    
+
     Surface(
         color = backgroundColor,
         shape = RoundedCornerShape(6.dp),
@@ -348,7 +346,7 @@ fun StatusBadge(status: EchoKitClient.IdeaStatus) {
         EchoKitClient.IdeaStatus.IN_PROGRESS -> Color(0xFFFF9800)
         EchoKitClient.IdeaStatus.COMPLETED -> Color(0xFF4CAF50)
     }
-    
+
     Surface(
         color = backgroundColor,
         shape = RoundedCornerShape(6.dp)

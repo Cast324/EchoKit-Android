@@ -1,4 +1,4 @@
-package com.example.echokit
+package com.michaelblades.echokit
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -16,7 +16,7 @@ import java.util.*
 
 /**
  * EchoKit Android Client
- * 
+ *
  * A feature request and feedback management client for Android
  */
 @SuppressLint("UnsafeOptInUsageError")
@@ -38,7 +38,7 @@ class EchoKitClient(
     private fun getOrCreateUserId(): String {
         val key = "EchoKitUserId"
         val existingId = prefs.getString(key, null)
-        
+
         return if (existingId != null) {
             existingId
         } else {
@@ -54,10 +54,10 @@ class EchoKitClient(
     enum class IdeaStatus(val value: String) {
         @SerialName("pending")
         PENDING("pending"),
-        
+
         @SerialName("in-progress")
         IN_PROGRESS("in-progress"),
-        
+
         @SerialName("completed")
         COMPLETED("completed");
 
@@ -73,16 +73,16 @@ class EchoKitClient(
     enum class IdeaCategory(val value: String) {
         @SerialName("new-idea")
         NEW_IDEA("new-idea"),
-        
+
         @SerialName("feature")
         FEATURE("feature"),
-        
+
         @SerialName("enhancement")
         ENHANCEMENT("enhancement"),
-        
+
         @SerialName("integration")
         INTEGRATION("integration"),
-        
+
         @SerialName("ui-ux")
         UI_UX("ui-ux");
 
@@ -191,11 +191,11 @@ class EchoKitClient(
         onlyApproved: Boolean = false
     ): List<Idea> = withContext(Dispatchers.IO) {
         val urlBuilder = "$baseURL/api/ideas".toHttpUrlOrNull()!!.newBuilder()
-        
+
         status?.let { urlBuilder.addQueryParameter("status", it.value) }
         if (onlyApproved) urlBuilder.addQueryParameter("approved", "true")
         urlBuilder.addQueryParameter("userId", userId)
-        
+
         get(urlBuilder.build())
     }
 

@@ -1,4 +1,4 @@
-package com.example.echokit.ui
+package com.michaelblades.echokit.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -13,12 +13,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.example.echokit.EchoKitClient
+import com.michaelblades.echokit.EchoKitClient
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import java.text.SimpleDateFormat
@@ -34,14 +32,14 @@ fun IdeaDetailScreen(
     val isLoading by viewModel.isLoading.collectAsState()
     val errorMessage by viewModel.errorMessage.collectAsState()
     val isSubmittingComment by viewModel.isSubmittingComment.collectAsState()
-    
+
     var commentText by remember { mutableStateOf("") }
     var isCommentFieldFocused by remember { mutableStateOf(false) }
-    
+
     LaunchedEffect(Unit) {
         viewModel.loadDetail()
     }
-    
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -73,18 +71,18 @@ fun IdeaDetailScreen(
                         )
                     }
                 }
-                
+
                 ideaDetail?.let { idea ->
                     // Idea header
                     item {
                         IdeaHeader(idea = idea, onVote = { viewModel.vote() })
                     }
-                    
+
                     // Divider
                     item {
                         HorizontalDivider()
                     }
-                    
+
                     // Comments header
                     item {
                         Row(
@@ -108,7 +106,7 @@ fun IdeaDetailScreen(
                             )
                         }
                     }
-                    
+
                     // Comment input
                     item {
                         CommentInput(
@@ -128,7 +126,7 @@ fun IdeaDetailScreen(
                             }
                         )
                     }
-                    
+
                     // Comments list
                     if (idea.comments.isEmpty()) {
                         item {
@@ -175,7 +173,7 @@ fun IdeaHeader(idea: EchoKitClient.IdeaDetail, onVote: () -> Unit) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 StatusBadge(status = idea.status)
-                
+
                 if (idea.isApproved) {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -196,14 +194,14 @@ fun IdeaHeader(idea: EchoKitClient.IdeaDetail, onVote: () -> Unit) {
                     }
                 }
             }
-            
+
             // Title
             Text(
                 text = idea.title,
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold
             )
-            
+
             // Body
             idea.body?.let { body ->
                 if (body.isNotEmpty()) {
@@ -214,7 +212,7 @@ fun IdeaHeader(idea: EchoKitClient.IdeaDetail, onVote: () -> Unit) {
                     )
                 }
             }
-            
+
             // Creator info
             Row(
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -244,14 +242,14 @@ fun IdeaHeader(idea: EchoKitClient.IdeaDetail, onVote: () -> Unit) {
                     )
                 }
             }
-            
+
             // Vote button
             Button(
                 onClick = onVote,
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = if (idea.userHasVoted) 
-                        MaterialTheme.colorScheme.primary 
-                    else 
+                    containerColor = if (idea.userHasVoted)
+                        MaterialTheme.colorScheme.primary
+                    else
                         MaterialTheme.colorScheme.surfaceVariant
                 ),
                 modifier = Modifier.height(48.dp)
@@ -261,7 +259,7 @@ fun IdeaHeader(idea: EchoKitClient.IdeaDetail, onVote: () -> Unit) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
-                        if (idea.userHasVoted) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowUp,
+                        Icons.Default.KeyboardArrowUp,
                         contentDescription = "Vote"
                     )
                     Text(
@@ -311,7 +309,7 @@ fun CommentInput(
                         .padding(8.dp),
                     tint = MaterialTheme.colorScheme.primary
                 )
-                
+
                 Column(
                     modifier = Modifier.weight(1f),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -324,7 +322,7 @@ fun CommentInput(
                         minLines = if (isCommentFieldFocused || commentText.isNotEmpty()) 3 else 1,
                         maxLines = 6
                     )
-                    
+
                     if (isCommentFieldFocused || commentText.isNotEmpty()) {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
@@ -334,9 +332,9 @@ fun CommentInput(
                             TextButton(onClick = onCancel) {
                                 Text("Cancel")
                             }
-                            
+
                             Spacer(modifier = Modifier.width(8.dp))
-                            
+
                             Button(
                                 onClick = onSubmit,
                                 enabled = commentText.isNotEmpty() && !isSubmitting
@@ -414,7 +412,7 @@ fun CommentCard(comment: EchoKitClient.Comment) {
                     .padding(8.dp),
                 tint = MaterialTheme.colorScheme.primary
             )
-            
+
             Column(
                 verticalArrangement = Arrangement.spacedBy(6.dp)
             ) {
@@ -427,7 +425,7 @@ fun CommentCard(comment: EchoKitClient.Comment) {
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.SemiBold
                     )
-                    
+
                     comment.createdAt?.let {
                         Text(
                             "•",
@@ -440,7 +438,7 @@ fun CommentCard(comment: EchoKitClient.Comment) {
                         )
                     }
                 }
-                
+
                 Text(
                     comment.body,
                     style = MaterialTheme.typography.bodyMedium
@@ -459,7 +457,7 @@ fun formatRelativeTime(isoDate: String): String {
         val diffInMinutes = diffInMillis / (1000 * 60)
         val diffInHours = diffInMinutes / 60
         val diffInDays = diffInHours / 24
-        
+
         when {
             diffInMinutes < 1 -> "just now"
             diffInMinutes < 60 -> "${diffInMinutes}m ago"

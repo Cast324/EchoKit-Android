@@ -1,4 +1,4 @@
-package com.example.echokit
+package com.michaelblades.echokit
 
 import androidx.compose.ui.graphics.Color
 
