@@ -85,7 +85,7 @@ afterEvaluate {
             create<MavenPublication>("release") {
                 from(components["release"])
 
-                groupId = "com.github.michaelblades"
+                groupId = "com.github.cast324"
                 artifactId = "echokit"
                 version = "1.0.0"
             }
