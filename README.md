@@ -40,7 +40,7 @@ Add the dependency to your app's `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation("com.github.michaelblades:TestEchoKit:v1.0.0")
+    implementation("com.github.cast324:EchoKit-Android:v1.0.0")
 }
 ```
 
@@ -48,7 +48,7 @@ Or if using `build.gradle` (Groovy):
 
 ```groovy
 dependencies {
-    implementation 'com.github.michaelblades:TestEchoKit:v1.0.0'
+    implementation 'com.github.cast324:EchoKit-Android:v1.0.0'
 }
 ```
 
