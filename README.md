@@ -324,7 +324,3 @@ The library includes the following dependencies (automatically included):
 - Kotlinx Coroutines 1.7.3
 - Jetpack Compose (Material 3)
 - Accompanist SwipeRefresh 0.32.0
-
-## License
-
-MIT License
