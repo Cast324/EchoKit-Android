@@ -1,7 +1,8 @@
 # EchoKit Android SDK
 
-A feature request and feedback management library for Android. EchoKit provides drop-in UI components for collecting user ideas, votes, and comments.
+The official Android SDK for [EchoKit](https://www.echokit.app) - a powerful feedback and feature request platform for your Android apps.
 
+A feature request and feedback management library for Android. EchoKit provides drop-in UI components for collecting user ideas, votes, and comments.
 [![](https://jitpack.io/v/michaelblades/TestEchoKit.svg)](https://jitpack.io/#michaelblades/TestEchoKit)
 
 ## Installation
@@ -70,7 +71,6 @@ Create an `EchoKitClient` instance with your API credentials:
 import com.michaelblades.echokit.EchoKitClient
 
 val client = EchoKitClient(
-    baseURL = "https://your-echokit-server.com",
     apiKey = "your_api_key",
     userEmail = "user@example.com",      // optional
     userName = "John Doe",                // optional

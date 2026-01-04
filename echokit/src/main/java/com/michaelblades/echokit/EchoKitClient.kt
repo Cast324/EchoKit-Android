@@ -21,12 +21,12 @@ import java.util.*
  */
 @SuppressLint("UnsafeOptInUsageError")
 class EchoKitClient(
-    private val baseURL: String,
     private val apiKey: String,
     private val userEmail: String? = null,
     private val userName: String? = null,
     context: Context
 ) {
+    private val baseURL = "https://www.echokit.app"
     private val prefs: SharedPreferences = context.getSharedPreferences("EchoKit", Context.MODE_PRIVATE)
     private val userId: String = getOrCreateUserId()
     private val httpClient = OkHttpClient()
@@ -238,7 +238,7 @@ class EchoKitClient(
             .build()
 
         httpClient.newCall(request).execute().use { response ->
-            if (!response.isSuccessful) throw IOException("Request failed: ${response.code}")
+            if (!response.isSuccessful) throw IOException("Request failed: ${'$'}{response.code}")
             val body = response.body?.string() ?: throw IOException("Empty response")
             return json.decodeFromString(body)
         }
@@ -256,7 +256,7 @@ class EchoKitClient(
             .build()
 
         httpClient.newCall(request).execute().use { response ->
-            if (!response.isSuccessful) throw IOException("Request failed: ${response.code}")
+            if (!response.isSuccessful) throw IOException("Request failed: ${'$'}{response.code}")
             val responseBody = response.body?.string() ?: throw IOException("Empty response")
             return json.decodeFromString(responseBody)
         }
@@ -274,7 +274,7 @@ class EchoKitClient(
             .build()
 
         httpClient.newCall(request).execute().use { response ->
-            if (!response.isSuccessful) throw IOException("Request failed: ${response.code}")
+            if (!response.isSuccessful) throw IOException("Request failed: ${'$'}{response.code}")
         }
     }
 
